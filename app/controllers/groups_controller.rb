@@ -3,13 +3,16 @@ class GroupsController < ApplicationController
 
   # GET /groups or /groups.json
   def index
-    @groups = Group.all
+    @groups = current_user.groups.all.includes(:expenses)
+    @total_expenses = current_user.groups.joins(:expenses).sum('expenses.amount')
   end
 
   def splash; end
 
   # GET /groups/1 or /groups/1.json
   def show
+    @group = Group.find(params[:id])
+    render 'show', locals: { group: @group }
   end
 
   # GET /groups/new
@@ -23,16 +26,19 @@ class GroupsController < ApplicationController
 
   # POST /groups or /groups.json
   def create
-    @group = Group.new(group_params)
+    @group = current_user.groups.new(group_params)
 
-    respond_to do |format|
-      if @group.save
-        format.html { redirect_to group_url(@group), notice: "Group was successfully created." }
-        format.json { render :show, status: :created, location: @group }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @group.errors, status: :unprocessable_entity }
+    if @group.save
+      icon_file = params[:group][:icon]
+      if icon_file
+        icon_filename = icon_file.original_filename
+        icon_filepath = Rails.root.join('app', 'assets', 'images', 'icons', icon_filename)
+        File.binwrite(icon_filepath, icon_file.read)
+        @group.update(icon: "icons/#{icon_filename}")
       end
+      redirect_to user_groups_path(current_user), notice: 'Category was successfully created.'
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -40,7 +46,7 @@ class GroupsController < ApplicationController
   def update
     respond_to do |format|
       if @group.update(group_params)
-        format.html { redirect_to group_url(@group), notice: "Group was successfully updated." }
+        format.html { redirect_to group_url(@group), notice: 'Category was successfully updated.' }
         format.json { render :show, status: :ok, location: @group }
       else
         format.html { render :edit, status: :unprocessable_entity }
