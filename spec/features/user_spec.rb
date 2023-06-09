@@ -25,7 +25,7 @@ RSpec.describe 'Users', type: :feature do
   describe 'forgot password page' do
     it 'should have a forgot password page' do
       visit new_user_password_path
-      expect(page).to have_content('FORGOT PASSWORD')
+      expect(page).to have_content('Forgot your password')
     end
 
     it 'should have a send me reset password instructions button' do
