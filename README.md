@@ -41,7 +41,7 @@
 - **[Users can create a category.]**
 - **[Limit access to web app resources based on authorization rules.]**
 
-- Here is a [Live Demo Link](https://diva-spends.onrender.com/)
+- Here is a [Live Demo Link](https://budgets-cuvn.onrender.com/)
 - Here is a [presentation video link](https://www.loom.com/share/cf4a1f9bf02c477092cf7c70a5767238)
 
 ## Project Screenshots
