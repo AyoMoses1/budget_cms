@@ -27,20 +27,27 @@ class GroupsController < ApplicationController
   # POST /groups or /groups.json
   def create
     @group = current_user.groups.new(group_params)
+    @group.icon.attach(params[:group][:icon])
 
     if @group.save
-      icon_file = params[:group][:icon]
-      if icon_file
-        icon_filename = icon_file.original_filename
-        icon_filepath = Rails.root.join('app', 'assets', 'images', 'icons', icon_filename)
-        File.binwrite(icon_filepath, icon_file.read)
-        @group.update(icon: "icons/#{icon_filename}")
-      end
       redirect_to user_groups_path(current_user), notice: 'Category was successfully created.'
     else
       render :new, status: :unprocessable_entity
     end
   end
+
+  # def create
+  #   @category = current_user.categories.new(category_params)
+  #   @category.user = current_user
+  #   @category.icon.attach(params[:category][:icon])
+
+  #   if @category.save
+  #     flash[:success] = 'category created successfully'
+  #     redirect_to users_path(user_id: current_user.id)
+  #   else
+  #     flash[:alert] = 'error creating category'
+  #   end
+  # end
 
   # PATCH/PUT /groups/1 or /groups/1.json
   def update
