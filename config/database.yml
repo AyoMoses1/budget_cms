@@ -85,6 +85,4 @@ test:
 #
 production:
   <<: *default
-  database: budget_cms_production
-  username: budget_cms
-  password: <%= ENV["BUDGET_CMS_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
