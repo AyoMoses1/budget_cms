@@ -56,12 +56,6 @@ h2.group_name a {
   font-size: 12px;
 }
 
-.button_box {
-  background-color: #5fb523;
-  width: 100%;
-  height: 80px;
-}
-
 .push_box {
   padding-top: 15px;
 }
@@ -212,7 +206,13 @@ h2.login {
   text-align: center;
   justify-content: center;
   display: block;
-  padding-bottom: 70%;
+}
+
+.splash_action {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .splash_name {
@@ -269,4 +269,11 @@ input[type="password"] {
 
 .btn:hover {
   background-color: #45a049;
+}
+
+.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 20px 0;
 }
